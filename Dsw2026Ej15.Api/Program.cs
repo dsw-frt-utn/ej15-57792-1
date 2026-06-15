@@ -1,6 +1,13 @@
+using Dsw2026Ej15.Data.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<IPersistence>(sp => 
+{
+    var filePath = Path.Combine(builder.Environment.ContentRootPath, "specialities.json");
+    return new PersistenceInMemory(filePath);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

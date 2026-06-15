@@ -13,7 +13,9 @@ namespace Dsw2026Ej15.Data.Persistence
         Speciality? GetSpecialityById(Guid id);
 
         IReadOnlyCollection<Doctor> GetDoctors();
+        IReadOnlyCollection<Doctor> GetActiveDoctors();
         Doctor? GetDoctorById(Guid id);
+        Doctor? GetActiveDoctorById(Guid id);
 
         void addDoctor(Doctor doctor);
     }
