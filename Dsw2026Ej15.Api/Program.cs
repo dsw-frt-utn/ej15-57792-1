@@ -1,16 +1,16 @@
 using Dsw2026Ej15.Api;
+using Dsw2026Ej15.Data.Context;
 using Dsw2026Ej15.Data.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHealthChecks();
 
 // Add services to the container.
-builder.Services.AddSingleton<IPersistence>(sp => 
-{
-    var filePath = Path.Combine(builder.Environment.ContentRootPath, "specialities.json");
-    return new PersistenceInMemory(filePath);
-});
+builder.Services.AddDbContext<DswDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddScoped<IPersistence, PersistenceEf>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
